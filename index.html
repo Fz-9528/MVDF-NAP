@@ -5,310 +5,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-View Dynamic Fusion for Next Activity Prediction in Business Processes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2563eb;       /* 现代蓝 */
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;            /* 极浅的蓝灰背景 */
+            --text-main: #334155;           /* 柔和的主文本色 */
+            --text-heading: #0f172a;        /* 深色标题 */
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -2px rgba(0,0,0,0.025);
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.7;
             margin: 0;
             padding: 0;
-            background-color: #fafafa;
-            color: #333;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
             max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 20px;
         }
 
+        /* 头部美化 */
         .header {
             text-align: center;
-            margin-bottom: 60px;
+            margin-bottom: 70px;
+            padding: 40px 0;
         }
 
         .title {
-            font-size: 2.4em;
+            font-size: 2.5em;
             font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-
-        .subtitle {
-            font-size: 1.4em;
-            color: #666;
-            font-weight: 400;
-            margin-bottom: 30px;
+            color: var(--text-heading);
+            margin-bottom: 25px;
+            line-height: 1.3;
+            letter-spacing: -0.02em;
         }
 
         .links {
-            margin-bottom: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
         }
 
         .links a {
-            display: inline-block;
-            margin: 0 15px;
-            padding: 8px 20px;
-            background-color: #007bff;
-            color: white;
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 24px;
+            background-color: var(--card-bg);
+            color: var(--text-heading);
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 30px;
             font-weight: 500;
-            transition: background-color 0.3s;
+            font-size: 0.95em;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.2s ease;
         }
 
         .links a:hover {
-            background-color: #0056b3;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
         }
 
+        /* 统一的区块卡片风格 */
         .section {
-            margin-bottom: 50px;
+            background: var(--card-bg);
+            padding: 40px 50px;
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .section h2 {
-            font-size: 1.8em;
+            font-size: 1.6em;
             font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
+            color: var(--text-heading);
+            margin-top: 0;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 标题前的蓝色小竖杠装饰 */
+        .section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            margin-right: 12px;
         }
 
         .section p {
-            font-size: 1.1em;
-            line-height: 1.7;
-            color: #444;
-            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            text-align: justify;
         }
 
-        .method-grid {
+        /* Method Box 美化 (保留了您的2x2网格布局) */
+        .method-box {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 30px;
+        }
+
+        .method-box h3 {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: var(--text-heading);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .method-box ul {
+            margin: 0;
+            padding-left: 16px;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin: 30px 0;
-        }
-
-        /* .method-box {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #007bff;
-        }
-
-        .method-box h3 {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-        }
-
-        .method-box ul {
-            margin: 0;
-            padding-left: 20px;
+            grid-template-rows: auto auto;
+            grid-auto-flow: column;
+            column-gap: 50px;
+            row-gap: 20px;
         }
 
         .method-box li {
-            margin-bottom: 8px;
-            color: #555;
-        } */
-
-        /* 修改后的样式 */
-        .method-box {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-left: 4px solid #007bff;
-        }
-
-        .method-box h3 {
-            font-size: 1.3em;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-        }
-
-        /* 修改了 ul 的样式 */
-        .method-box ul {
-            margin: 0;
-            padding-left: 20px;
-            display: grid;
-            grid-template-columns: 1fr 1fr; /* 将容器平分为等宽的两列 */
-            grid-template-rows: auto auto;  /* 隐式声明两行 */
-            grid-auto-flow: column;         /* 核心：按列优先排列，确保1、2在左，3、4在右 */
-            column-gap: 40px;               /* 两列之间的间距，可根据需要调整 */
-            row-gap: 12px;                  /* 上下两行之间的间距 */
+            color: var(--text-main);
+            text-align: justify;
+            font-size: 0.95em;
+            line-height: 1.6;
         }
         
-        /* 修改了 li 的样式 */
-        .method-box li {
-            /*移除了 margin-bottom，因为已经在 ul 中用 row-gap 控制了上下间距*/
-            color: #555;
-            text-align: justify; /* 可选：让文字两端对齐，视觉上更整齐 */
+        .method-box li strong {
+            color: var(--text-heading);
         }
 
-        .highlight {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 40px 0;
-        }
-
-        .highlight h3 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-
-        .results-list {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .results-list ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .results-list li {
-            margin-bottom: 12px;
-            color: #555;
-            font-size: 1.05em;
-        }
-
-        .contributions {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 4px solid #28a745;
-        }
-
-        .contributions ul {
-            margin: 0;
-            padding-left: 20px;
-        }
-
-        .contributions li {
-            margin-bottom: 12px;
-            color: #555;
-            font-size: 1.05em;
-        }
-
+        /* 图片容器美化 */
         .figure-container {
             text-align: center;
-            margin: 30px 0;
-            background: white;
+            margin: 40px 0;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: var(--bg-color);
+            border-radius: 12px;
+            border: 1px dashed var(--border-color);
         }
 
         .figure-container img {
             max-width: 100%;
             height: auto;
-            border-radius: 4px;
+            border-radius: 8px;
         }
 
         .figure-container figcaption {
             margin-top: 15px;
-            font-style: italic;
-            color: #666;
-            font-size: 0.95em;
+            color: #64748b;
+            font-size: 0.9em;
+            font-weight: 500;
         }
 
-        .pdf-container {
-            text-align: center;
-            margin: 30px 0;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        /* 表格美化 */
+        .table-responsive {
+            overflow-x: auto;
+            margin: 30px 0 10px;
         }
 
-        .pdf-container embed {
-            width: 100%;
-            height: 600px;
-            border-radius: 4px;
-        }
-
-        .pdf-container figcaption {
-            margin-top: 15px;
-            font-style: italic;
-            color: #666;
-            font-size: 0.95em;
-        }
-        
         .results-table {
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--card-bg);
+            border-radius: 12px;
             overflow: hidden;
+            border: 1px solid var(--border-color);
         }
 
         .results-table th,
         .results-table td {
-            padding: 12px 15px;
+            padding: 16px 20px;
             text-align: center;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .results-table th {
-            background-color: #f8f9fa;
+            background-color: #f8fafc;
             font-weight: 600;
-            color: #1a1a1a;
+            color: var(--text-heading);
             font-size: 0.95em;
+            white-space: nowrap;
         }
 
-        .results-table td {
-            color: #555;
-            font-size: 0.9em;
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+
+        .results-table tbody tr:hover {
+            background-color: #f1f5f9;
         }
 
         .results-table .best-result {
-            font-weight: bold;
-            color: #007bff;
+            font-weight: 700;
+            color: var(--primary-color);
         }
 
-        .results-table tr:hover {
-            background-color: #f8f9fa;
+        /* 高亮自己的模型行 */
+        .results-table tr.our-model td {
+            background-color: #eff6ff;
+            font-weight: 500;
+        }
+        .results-table tr.our-model:hover td {
+            background-color: #dbeafe;
         }
 
+        /* 移动端适配 */
         @media (max-width: 768px) {
             .container {
-                padding: 20px 15px;
+                padding: 30px 15px;
             }
-
+            .section {
+                padding: 25px 20px;
+            }
             .title {
-                font-size: 2.2em;
+                font-size: 2em;
             }
-
-            .method-grid {
-                grid-template-columns: 1fr;
+            .method-box ul {
+                grid-template-columns: 1fr; /* 移动端改为单列 */
+                grid-auto-flow: row;
             }
-
+            .links {
+                flex-direction: column;
+                align-items: stretch;
+            }
             .links a {
-                display: block;
-                margin: 10px 0;
+                justify-content: center;
             }
-
-            .pdf-container embed {
-                height: 400px;
-            }
-
-            .results-table {
-                font-size: 0.8em;
-            }
-
-            .results-table th,
-            .results-table td {
-                padding: 8px 10px;
+            .results-table th, .results-table td {
+                padding: 12px 10px;
+                font-size: 0.85em;
             }
         }
     </style>
@@ -317,11 +271,16 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="title">Multi-View Dynamic Fusion for Next Activity Prediction in Business Processes
-                Testing</h1>
+            <h1 class="title">Multi-View Dynamic Fusion for Next Activity Prediction in Business Processes Testing</h1>
             <div class="links">
-                <a href="https://anonymous.4open.science/r/nod-dgmt-spoc-66FE/">Code</a>
-                <a href="#results" onclick="scrollToResults()">Results</a>
+                <a href="https://anonymous.4open.science/r/nod-dgmt-spoc-66FE/">
+                    <svg style="width:18px;height:18px;margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+                    Code Repository
+                </a>
+                <a href="#results" onclick="scrollToResults()">
+                    <svg style="width:18px;height:18px;margin-right:8px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    View Results
+                </a>
             </div>
         </div>
 
@@ -329,7 +288,11 @@
             <h2>Abstract</h2>
             <p>
                 To address issues in the next activity prediction task of predictive business process monitoring—namely the over-reliance on a single control-flow perspective, the underutilization of extended attributes, and the inability of static feature fusion strategies to adapt to diverse process scenarios—this paper proposes a Multi-View Dynamic Fusion method for Next Activity Prediction in Business Processes (MVDF-NAP). 
+            </p>
+            <p>
                 This method constructs event representations from three core perspectives: control-flow, time, and resource. Extended attributes beyond these core perspectives are encoded into a global context vector and injected as prefixes into the sequence modeling process. Building upon this, a dynamic fusion module based on cross-view attention is designed, enabling the model to adaptively learn and allocate fusion weights for each perspective. By combining this with a Transformer architecture to capture long-range dependencies, the method ultimately realizes next activity prediction. 
+            </p>
+            <p>
                 Experiments were conducted on 8 publicly available real-world event log datasets. The results demonstrate that MVDF-NAP achieves the highest prediction accuracy on 6 of the datasets, reaching 96.76% and 88.50% on the Helpdesk and RTFM datasets, respectively. Furthermore, the proposed method can adaptively adjust the importance of the control-flow, time, and resource perspectives according to different business process scenarios, thereby achieving a balance between predictive performance and model interpretability.
             </p>
         </div>
@@ -337,51 +300,31 @@
         <div class="section">
             <h2>Method</h2>
             <p>
-                我们的框架（MVDF-NAP）主要由四个阶段组成：多视角特征提取、前缀信息编码、特征动态融合和下一活动预测
+                我们的框架（MVDF-NAP）主要由四个阶段组成：多视角特征提取、前缀信息编码、特征动态融合和下一活动预测。
             </p>
             <div class="figure-container">
-                <img src="figs/framework.svg"
-                    alt="Overall framework of our diversity-guided metamorphic testing approach">
-                <figcaption>Figure 1: MVDF-NAP方法框架图
-                </figcaption>
+                <img src="figs/framework.svg" alt="Overall framework of our approach">
+                <figcaption>Figure 1: MVDF-NAP 方法框架图</figcaption>
             </div>
 
-            <div class="method-grid">
-                <div class="method-box">
-                    <h3>Metamorphic Relations</h3>
-                    <ul>
-                        <li><strong>多视角特征提取:</strong> 摒弃单一视角，从事件日志中提取控制流、时间和资源三类普遍
-                            存在的属性信息，将其转化为具有语义信息的连续向量</li>
-                        <li><strong>前缀信息编码:</strong> 将独立于核心三视角的扩展数据属性编码为一个全局上下文向量，为
-                            序列提供宏观的业务环境约束，避免直接拼接带来的信息冗余</li>
-                        <li><strong>特征动态融合:</strong> 引入跨视角注意力机制，结合当前流程实例的上下文，自适应判断控制
-                            流、时间和资源三者之间的互补关系，生成动态加权融合的序列特征</li>
-                        <li><strong>下一活动预测:</strong> 将融合后的事件序列与前缀序列拼接，共同输入Transformer编码器捕捉
-                            全局依赖，生成最终的下一事件预测结果</li>
-                    </ul>
-                </div>
-                <!-- <div class="method-box">
-                    <h3>Diversity-Guided Filter</h3>
-                    <ul>
-                        <li><strong>Position Filter:</strong> Maximizes perpendicular distance to original trajectory
-                        </li>
-                        <li><strong>Action Filter:</strong> Leverages LLMs for semantic diversity selection</li>
-                        <li><strong>Condition Filter:</strong> Maximizes refinement divergence from original conditions
-                        </li>
-                        <li><strong>Scene Filter:</strong> Minimizes scene similarity while maintaining task-irrelevance
-                        </li>
-                    </ul>
-                </div> -->
+            <div class="method-box">
+                <h3>Metamorphic Relations</h3>
+                <ul>
+                    <li><strong>多视角特征提取:</strong> 摒弃单一视角，从事件日志中提取控制流、时间和资源三类普遍存在的属性信息，将其转化为具有语义信息的连续向量。</li>
+                    <li><strong>前缀信息编码:</strong> 将独立于核心三视角的扩展数据属性编码为一个全局上下文向量，为序列提供宏观的业务环境约束，避免直接拼接带来的信息冗余。</li>
+                    <li><strong>特征动态融合:</strong> 引入跨视角注意力机制，结合当前流程实例的上下文，自适应判断控制流、时间和资源三者之间的互补关系，生成动态加权融合的序列特征。</li>
+                    <li><strong>下一活动预测:</strong> 将融合后的事件序列与前缀序列拼接，共同输入 Transformer 编码器捕捉全局依赖，生成最终的下一事件预测结果。</li>
+                </ul>
             </div>
         </div>
 
         <div class="section">
-            <h2>Four Key Perspectives </h2>
+            <h2>Four Key Perspectives</h2>
             <p>
-                我们设计了三种核心视角和一种前缀编码机制，以全面捕捉真实业务流程的多维语义特征.
+                我们设计了三种核心视角和一种前缀编码机制，以全面捕捉真实业务流程的多维语义特征。
             </p>
             <div class="figure-container">
-                <img src="figs/four-MRs.png" alt="Four types of metamorphic relations for NoD detection">
+                <img src="figs/four-MRs.png" alt="Four types of metamorphic relations">
                 <figcaption>Figure 2: Four types of metamorphic relations for NoD detection</figcaption>
             </div>
         </div>
@@ -389,113 +332,114 @@
         <div class="section" id="results">
             <h2>Results</h2>
             <p>
-                我们在涵盖IT服务、金融等领域的8个公开事件日志数据集上进行了实验，并与包含传统序列模型和图神经网络在内的
-                5种代表性基线模型进行了对比.
+                我们在涵盖IT服务、金融等领域的8个公开事件日志数据集上进行了实验，并与包含传统序列模型和图神经网络在内的5种代表性基线模型进行了对比。
             </p>
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Model</th>
-                        <th>BPIC2012_A</th>
-                        <th>BPIC2012_O</th>
-                        <th>BPIC2013_I</th>
-                        <th>BPIC2013_P</th>
-                        <th>BPIC2017_O</th>
-                        <th>BPIC2020</th>
-                        <th>Helpdesk</th>
-                        <th>RTFM</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>LSTM</strong></td>
-                        <td >72.07%</td>
-                        <td>75.98%</td>
-                        <td>66.5%</td>
-                        <td>52.9%</td>
-                        <td>80.4%</td>
-                        <td>85.6%</td>
-                        <td>74.33%</td>
-                        <td>75.25%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>PTM</strong></td>
-                        <td >76.7%</td>
-                        <td>78.6%</td>
-                        <td>65%</td>
-                        <td>51.8%</td>
-                        <td>81.8%</td>
-                        <td>85.5%</td>
-                        <td>78.6%</td>
-                        <td>81.73%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>MiDA</strong></td>
-                        <td >79.5%</td>
-                        <td>84.2%</td>
-                        <td>72.4%</td>
-                        <td>62.1%</td>
-                        <td>89.4%</td>
-                        <td>88.2%</td>
-                        <td>80.1%</td>
-                        <td>84.64%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>MiTFM</strong></td>
-                        <td >80%</td>
-                        <td>84.3%</td>
-                        <td>72.4%</td>
-                        <td>63.5%</td>
-                        <td>90.3%</td>
-                        <td>88.7%</td>
-                        <td>82%</td>
-                        <td>81.24%</td>
-                    </tr>
-                    <tr>
-                        <td><strong>MHG</strong></td>
-                        <td>74.25%</td>
-                        <td>83.3%</td>
-                        <td>72.85%</td>
-                        <td class="best-result">64.9%</td>
-                        <td class="best-result">92.3%</td>
-                        <td>85%</td>
-                        <td>83.5%</td>
-                        <td>81.89%</td>
-                    </tr class="best-result">
-                        <td><strong>MVDF-NAP</strong></td>
-                        <td class="best-result">80.41%</td>
-                        <td class="best-result">84.62%</td>
-                        <td class="best-result">74.59%</td>
-                        <td>64.89%</td>
-                        <td>90.51%</td>
-                        <td class="best-result">89/05%</td>
-                        <td class="best-result">96.76%</td>
-                        <td class="best-result">88.5%</td>
-                    </tr>
-                </tbody>
-            </table>
+            
+            <div class="table-responsive">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>BPIC2012_A</th>
+                            <th>BPIC2012_O</th>
+                            <th>BPIC2013_I</th>
+                            <th>BPIC2013_P</th>
+                            <th>BPIC2017_O</th>
+                            <th>BPIC2020</th>
+                            <th>Helpdesk</th>
+                            <th>RTFM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LSTM</td>
+                            <td>72.07%</td>
+                            <td>75.98%</td>
+                            <td>66.5%</td>
+                            <td>52.9%</td>
+                            <td>80.4%</td>
+                            <td>85.6%</td>
+                            <td>74.33%</td>
+                            <td>75.25%</td>
+                        </tr>
+                        <tr>
+                            <td>PTM</td>
+                            <td>76.7%</td>
+                            <td>78.6%</td>
+                            <td>65%</td>
+                            <td>51.8%</td>
+                            <td>81.8%</td>
+                            <td>85.5%</td>
+                            <td>78.6%</td>
+                            <td>81.73%</td>
+                        </tr>
+                        <tr>
+                            <td>MiDA</td>
+                            <td>79.5%</td>
+                            <td>84.2%</td>
+                            <td>72.4%</td>
+                            <td>62.1%</td>
+                            <td>89.4%</td>
+                            <td>88.2%</td>
+                            <td>80.1%</td>
+                            <td>84.64%</td>
+                        </tr>
+                        <tr>
+                            <td>MiTFM</td>
+                            <td>80%</td>
+                            <td>84.3%</td>
+                            <td>72.4%</td>
+                            <td>63.5%</td>
+                            <td>90.3%</td>
+                            <td>88.7%</td>
+                            <td>82%</td>
+                            <td>81.24%</td>
+                        </tr>
+                        <tr>
+                            <td>MHG</td>
+                            <td>74.25%</td>
+                            <td>83.3%</td>
+                            <td>72.85%</td>
+                            <td class="best-result">64.9%</td>
+                            <td class="best-result">92.3%</td>
+                            <td>85%</td>
+                            <td>83.5%</td>
+                            <td>81.89%</td>
+                        </tr>
+                        <tr class="our-model">
+                            <td><strong>MVDF-NAP</strong></td>
+                            <td class="best-result">80.41%</td>
+                            <td class="best-result">84.62%</td>
+                            <td class="best-result">74.59%</td>
+                            <td>64.89%</td>
+                            <td>90.51%</td>
+                            <td class="best-result">89.05%</td>
+                            <td class="best-result">96.76%</td>
+                            <td class="best-result">88.5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="section">
             <h2>可解释性分析</h2>
             <p>
-                The following examples demonstrate how our framework detects different types of non-optimal decisions
-                across various mutation scenarios.
+                The following examples demonstrate how our framework detects different types of non-optimal decisions across various mutation scenarios.
             </p>
             <div class="figure-container">
-                <img src="figs/case_v5.png"
-                    alt="Case study examples showing violation detection across different mutation types">
-                <figcaption>Figure 3: Case study examples showing violation detection across different mutation types
-                </figcaption>
+                <img src="figs/case_v5.png" alt="Case study examples">
+                <figcaption>Figure 3: Case study examples showing violation detection across different mutation types</figcaption>
             </div>
         </div>
     </div>
 
     <script>
         function scrollToResults() {
-            document.getElementById('results').scrollIntoView({
-                behavior: 'smooth'
-            });
+            const yOffset = -20; // 稍微偏移一点，避免贴着屏幕边缘
+            const element = document.getElementById('results');
+            const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({top: y, behavior: 'smooth'});
         }
     </script>
 </body>
