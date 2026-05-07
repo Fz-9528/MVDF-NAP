@@ -88,7 +88,7 @@
             margin: 30px 0;
         }
 
-        .method-box {
+        /* .method-box {
             background: white;
             padding: 25px;
             border-radius: 8px;
@@ -111,6 +111,41 @@
         .method-box li {
             margin-bottom: 8px;
             color: #555;
+        } */
+
+        /* 修改后的样式 */
+        .method-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #007bff;
+        }
+
+        .method-box h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        /* 修改了 ul 的样式 */
+        .method-box ul {
+            margin: 0;
+            padding-left: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 将容器平分为等宽的两列 */
+            grid-template-rows: auto auto;  /* 隐式声明两行 */
+            grid-auto-flow: column;         /* 核心：按列优先排列，确保1、2在左，3、4在右 */
+            column-gap: 40px;               /* 两列之间的间距，可根据需要调整 */
+            row-gap: 12px;                  /* 上下两行之间的间距 */
+        }
+        
+        /* 修改了 li 的样式 */
+        .method-box li {
+            /*移除了 margin-bottom，因为已经在 ul 中用 row-gap 控制了上下间距*/
+            color: #555;
+            text-align: justify; /* 可选：让文字两端对齐，视觉上更整齐 */
         }
 
         .highlight {
@@ -319,8 +354,6 @@
                             存在的属性信息，将其转化为具有语义信息的连续向量</li>
                         <li><strong>前缀信息编码:</strong> 将独立于核心三视角的扩展数据属性编码为一个全局上下文向量，为
                             序列提供宏观的业务环境约束，避免直接拼接带来的信息冗余</li>
-                    </ul>
-                    <ul>
                         <li><strong>特征动态融合:</strong> 引入跨视角注意力机制，结合当前流程实例的上下文，自适应判断控制
                             流、时间和资源三者之间的互补关系，生成动态加权融合的序列特征</li>
                         <li><strong>下一活动预测:</strong> 将融合后的事件序列与前缀序列拼接，共同输入Transformer编码器捕捉
