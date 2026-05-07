@@ -282,7 +282,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="title">Detecting Non-Optimal Decisions of Embodied Agents via Diversity-Guided Metamorphic
+            <h1 class="title">Multi-View Dynamic Fusion for Next Activity Prediction in Business Processes
                 Testing</h1>
             <div class="links">
                 <a href="https://anonymous.4open.science/r/nod-dgmt-spoc-66FE/">Code</a>
@@ -293,24 +293,10 @@
         <div class="section">
             <h2>Abstract</h2>
             <p>
-                As embodied agents advance toward real-world deployment, ensuring optimal decisions becomes critical for
-                resource-constrained applications. Current evaluation methods focus primarily on functional correctness,
-                overlooking the non-functional optimality of generated plans. This gap can lead to significant
-                performance degradation and resource waste. We identify and formalize the problem of Non-optimal
-                Decisions (NoDs), where agents complete tasks successfully but inefficiently.
-                We present NoD-DGMT, a systematic framework for detecting NoDs in embodied agent task planning via
-                diversity-guided metamorphic testing. Our key insight is that optimal planners should exhibit invariant
-                behavioral properties under specific transformations. We design four novel metamorphic relations
-                capturing fundamental optimality properties: position detour suboptimality, action optimality
-                completeness, condition refinement monotonicity, and scene perturbation invariance. To maximize
-                detection efficiency, we introduce a diversity-guided selection strategy that actively selects test
-                cases exploring different violation categories, avoiding redundant evaluations while ensuring
-                comprehensive diversity coverage.
-                Extensive experiments on the AI2-THOR simulator with four state-of-the-art planning models demonstrate
-                that NoD-DGMT achieves violation detection rates of 31.9% on average, with our diversity-guided filter
-                improving rates by 4.3% and diversity scores by 3.3 on average. NoD-DGMT significantly outperforms six
-                baseline methods, with 16.8% relative improvement over the best baseline, and demonstrates consistent
-                superiority across different model architectures and task complexities.
+                Here is the English translation of the abstract, written in an academic and professional tone suitable for a research paper:
+                To address issues in the next activity prediction task of predictive business process monitoring—namely the over-reliance on a single control-flow perspective, the underutilization of extended attributes, and the inability of static feature fusion strategies to adapt to diverse process scenarios—this paper proposes a Multi-View Dynamic Fusion method for Next Activity Prediction in Business Processes (MVDF-NAP). 
+                This method constructs event representations from three core perspectives: control-flow, time, and resource. Extended attributes beyond these core perspectives are encoded into a global context vector and injected as prefixes into the sequence modeling process. Building upon this, a dynamic fusion module based on cross-view attention is designed, enabling the model to adaptively learn and allocate fusion weights for each perspective. By combining this with a Transformer architecture to capture long-range dependencies, the method ultimately realizes next activity prediction. 
+                Experiments were conducted on 8 publicly available real-world event log datasets. The results demonstrate that MVDF-NAP achieves the highest prediction accuracy on 6 of the datasets, reaching 96.76% and 88.50% on the Helpdesk and RTFM datasets, respectively. Furthermore, the proposed method can adaptively adjust the importance of the control-flow, time, and resource perspectives according to different business process scenarios, thereby achieving a balance between predictive performance and model interpretability.
             </p>
         </div>
 
