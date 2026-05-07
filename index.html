@@ -264,6 +264,73 @@
                 padding: 12px 10px;
                 font-size: 0.85em;
             }
+            .interpretability-grid {
+                grid-template-columns: 1fr; /* 手机端变为单列 */
+            }
+        }
+
+        /* 可解释性分析网格样式 */
+        .interpretability-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .interpretability-card {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .interpretability-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .interpretability-card h4 {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .interpretability-card p {
+            font-size: 0.95em;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .chart-img-container {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #f1f5f9;
+            background: #f8fafc;
+        }
+
+        .chart-img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* 补充说明文字 */
+        .conclusion-text {
+            margin-top: 30px;
+            padding: 20px;
+            background: #eff6ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            font-size: 0.95em;
+            color: #1e3a8a;
         }
     </style>
 </head>
@@ -422,14 +489,61 @@
             </div>
         </div>
 
-        <div class="section">
-            <h2>可解释性分析</h2>
+        <div class="section" id="interpretability">
+            <h2>可解释性分析 </h2>
             <p>
-                The following examples demonstrate how our framework detects different types of non-optimal decisions across various mutation scenarios.
+                为了揭示动态融合机制的工作原理，我们提取了模型在训练过程中<strong>控制流 (Activity)</strong>、<strong>时间 (Time)</strong> 和 <strong>资源 (Resource)</strong> 三个视角融合权重的演化轨迹。所有模型均从 1:1:1 的权重初始化开始。
+                通过对 8 个数据集的对比分析，我们发现不同业务流程对多视角信息的依赖程度存在显著差异，并成功将其划分为以下四种典型模式：
             </p>
-            <div class="figure-container">
-                <img src="figs/case_v5.png" alt="Case study examples">
-                <figcaption>Figure 3: Case study examples showing violation detection across different mutation types</figcaption>
+
+            <div class="interpretability-grid">
+                <div class="interpretability-card">
+                    <h4>1. 控制流主导型 (Control-Flow Dominated)</h4>
+                    <p>
+                        <strong>代表数据集：BPIC2020, Helpdesk</strong><br>
+                        控制流视角在训练初期迅速上升并保持高位。以 Helpdesk 为例，主流程路径占比较高，模型仅通过活动序列便能捕捉大部分转移规律，无需过度依赖其他视角。
+                    </p>
+                    <div class="chart-img-container">
+                        <img src="figs/weight_helpdesk.png" alt="Helpdesk Weight Evolution">
+                    </div>
+                </div>
+
+                <div class="interpretability-card">
+                    <h4>2. 资源主导型 (Resource Dominated)</h4>
+                    <p>
+                        <strong>代表数据集：BPIC2012, BPIC2013_I, BPIC2013_P</strong><br>
+                        资源视角权重在训练后期反超并成为主要驱动力。在信息技术事件处理等流程中，控制流循环较多，下一步操作高度依赖于当前工程师（资源）的专业领域和权限。
+                    </p>
+                    <div class="chart-img-container">
+                        <img src="figs/weight_bpic2013_i.png" alt="BPIC2013_I Weight Evolution">
+                    </div>
+                </div>
+
+                <div class="interpretability-card">
+                    <h4>3. 时间主导型 (Time Dominated)</h4>
+                    <p>
+                        <strong>代表数据集：BPIC2012_A</strong><br>
+                        训练深入后，时间视角（绿线）逐渐超越控制流。在这类具有复杂分支和循环的流程中，相同活动前缀的不同处理阶段往往需要依赖全局/局部时间间隔来进行区分。
+                    </p>
+                    <div class="chart-img-container">
+                        <img src="figs/weight_bpic2012_a.png" alt="BPIC2012_A Weight Evolution">
+                    </div>
+                </div>
+
+                <div class="interpretability-card">
+                    <h4>4. 多视角平衡型 (Multi-View Balanced)</h4>
+                    <p>
+                        <strong>代表数据集：BPIC2017_O, RTFM</strong><br>
+                        三类视角的权重在后期逐渐趋于平衡（~0.33）。这类流程高度复杂且标准化，单一视角难以完全主导预测，控制流、时间和资源之间展现出极强的互补关系。
+                    </p>
+                    <div class="chart-img-container">
+                        <img src="figs/weight_bpic2017_o.png" alt="BPIC2017_O Weight Evolution">
+                    </div>
+                </div>
+            </div>
+
+            <div class="conclusion-text">
+                <strong>Insight:</strong> 相比于传统的静态融合方法，MVDF-NAP 能够根据数据特性<strong>自适应调整不同视角的重要性</strong>。这不仅避免了人工调参的局限性提升了预测性能，更打破了深度学习的“黑盒”，为模型的决策过程提供了清晰的业务层面的可解释性。
             </div>
         </div>
     </div>
